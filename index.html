@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <script>
         tailwind.config = {
             theme: {
@@ -48,15 +49,24 @@
             overflow: hidden;
             position: relative;
         }
+
         .candle {
             width: 24px;
             border-radius: 4px;
             position: relative;
             animation: grow 2s ease-in-out infinite alternate;
         }
-        .candle.bullish { background: linear-gradient(180deg, #00E676 0%, rgba(0,230,118,0.2) 100%); border: 1px solid #00E676; }
-        .candle.bearish { background: linear-gradient(180deg, #FF1744 0%, rgba(255,23,68,0.2) 100%); border: 1px solid #FF1744; }
-        
+
+        .candle.bullish {
+            background: linear-gradient(180deg, #00E676 0%, rgba(0, 230, 118, 0.2) 100%);
+            border: 1px solid #00E676;
+        }
+
+        .candle.bearish {
+            background: linear-gradient(180deg, #FF1744 0%, rgba(255, 23, 68, 0.2) 100%);
+            border: 1px solid #FF1744;
+        }
+
         .wick {
             position: absolute;
             width: 2px;
@@ -64,8 +74,14 @@
             transform: translateX(-50%);
             z-index: -1;
         }
-        .bullish .wick { background-color: #00E676; }
-        .bearish .wick { background-color: #FF1744; }
+
+        .bullish .wick {
+            background-color: #00E676;
+        }
+
+        .bearish .wick {
+            background-color: #FF1744;
+        }
 
         .glass-panel {
             background: rgba(21, 28, 44, 0.7);
@@ -77,35 +93,43 @@
         .glow-text {
             text-shadow: 0 0 20px rgba(0, 230, 118, 0.5);
         }
-        
+
         .custom-scrollbar::-webkit-scrollbar {
             width: 4px;
         }
+
         .custom-scrollbar::-webkit-scrollbar-track {
             background: #1e222d;
         }
+
         .custom-scrollbar::-webkit-scrollbar-thumb {
             background: #2a2e39;
             border-radius: 4px;
         }
     </style>
 </head>
+
 <body class="bg-brand-dark text-white font-sans antialiased overflow-x-hidden">
 
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 glass-panel border-b-0 border-transparent">
+    <nav id="navbar"
+        class="fixed w-full z-50 transition-all duration-300 py-4 glass-panel border-b-0 border-transparent">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
                         <i class="fa-solid fa-chart-line text-brand-primary text-3xl"></i>
-                        <span class="font-bold text-2xl tracking-wider">Money<span class="text-brand-primary">Trade</span></span>
+                        <span class="font-bold text-2xl tracking-wider">Money<span
+                                class="text-brand-primary">Trade</span></span>
                     </div>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#expertise" class="text-gray-300 hover:text-brand-primary transition-colors">ความเชี่ยวชาญของเรา</a>
-                    <a href="#how-it-works" class="text-gray-300 hover:text-brand-primary transition-colors">เทคโนโลยีหลัก</a>
+                    <a href="#expertise"
+                        class="text-gray-300 hover:text-brand-primary transition-colors">ความเชี่ยวชาญของเรา</a>
+                    <a href="#how-it-works"
+                        class="text-gray-300 hover:text-brand-primary transition-colors">เทคโนโลยีหลัก</a>
                     <a href="#team" class="text-gray-300 hover:text-brand-primary transition-colors">ทีมงาน</a>
-                    <a href="#contact" class="bg-brand-primary text-brand-dark px-6 py-2 rounded-full font-semibold hover:bg-green-400 transition-all shadow-[0_0_15px_rgba(0,230,118,0.4)]">ติดต่อองค์กร</a>
+                    <a href="#contact"
+                        class="bg-brand-primary text-brand-dark px-6 py-2 rounded-full font-semibold hover:bg-green-400 transition-all shadow-[0_0_15px_rgba(0,230,118,0.4)]">ติดต่อองค์กร</a>
                 </div>
                 <!-- Mobile menu button -->
                 <div class="md:hidden flex items-center">
@@ -118,10 +142,14 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-brand-card absolute w-full border-b border-gray-800">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#expertise" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-brand-primary">ความเชี่ยวชาญของเรา</a>
-                <a href="#how-it-works" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-brand-primary">เทคโนโลยีหลัก</a>
-                <a href="#team" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-brand-primary">ทีมงาน</a>
-                <a href="#contact" class="block px-3 py-2 text-base font-medium text-brand-primary font-bold">ติดต่อองค์กร</a>
+                <a href="#expertise"
+                    class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-brand-primary">ความเชี่ยวชาญของเรา</a>
+                <a href="#how-it-works"
+                    class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-brand-primary">เทคโนโลยีหลัก</a>
+                <a href="#team"
+                    class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-brand-primary">ทีมงาน</a>
+                <a href="#contact"
+                    class="block px-3 py-2 text-base font-medium text-brand-primary font-bold">ติดต่อองค์กร</a>
             </div>
         </div>
     </nav>
@@ -129,36 +157,47 @@
     <main>
         <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
             <!-- Background effects -->
-            <div class="absolute top-0 left-1/4 w-96 h-96 bg-brand-primary rounded-full mix-blend-multiply filter blur-[128px] opacity-20 animate-pulse-slow"></div>
-            <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-brand-secondary rounded-full mix-blend-multiply filter blur-[128px] opacity-20 animate-pulse-slow" style="animation-delay: 1.5s"></div>
+            <div
+                class="absolute top-0 left-1/4 w-96 h-96 bg-brand-primary rounded-full mix-blend-multiply filter blur-[128px] opacity-20 animate-pulse-slow">
+            </div>
+            <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-brand-secondary rounded-full mix-blend-multiply filter blur-[128px] opacity-20 animate-pulse-slow"
+                style="animation-delay: 1.5s"></div>
 
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div class="lg:grid lg:grid-cols-12 lg:gap-16 items-center">
                     <div class="lg:col-span-6 text-center lg:text-left mb-12 lg:mb-0">
-                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border-brand-primary/30 text-sm font-medium text-brand-primary mb-6">
+                        <div
+                            class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border-brand-primary/30 text-sm font-medium text-brand-primary mb-6">
                             <span class="relative flex h-3 w-3">
-                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-primary opacity-75"></span>
-                              <span class="relative inline-flex rounded-full h-3 w-3 bg-brand-primary"></span>
+                                <span
+                                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-primary opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-3 w-3 bg-brand-primary"></span>
                             </span>
                             สถาบันวิจัยและพัฒนา AI เพื่อการลงทุน
                         </div>
                         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-                            ปฏิวัติการวิเคราะห์ตลาดด้วย <br/>
-                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-secondary">AI & Price Action</span>
+                            ปฏิวัติการวิเคราะห์ตลาดด้วย <br />
+                            <span
+                                class="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-secondary">AI
+                                & Price Action</span>
                         </h1>
                         <p class="text-lg text-gray-400 mb-8 max-w-2xl mx-auto lg:mx-0">
-                            Money Trade คือองค์กรที่มุ่งเน้นการวิจัยและพัฒนาเทคโนโลยี Machine Learning ผสานเข้ากับการวิเคราะห์พฤติกรรมราคา (Price Action) เชิงลึก เพื่อสร้างแบบจำลองความน่าจะเป็นในตลาดการเงิน
+                            Money Trade คือองค์กรที่มุ่งเน้นการวิจัยและพัฒนาเทคโนโลยี Machine Learning
+                            ผสานเข้ากับการวิเคราะห์พฤติกรรมราคา (Price Action) เชิงลึก
+                            เพื่อสร้างแบบจำลองความน่าจะเป็นในตลาดการเงิน
                         </p>
                         <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                            <a href="#how-it-works" class="bg-brand-primary text-brand-dark px-8 py-4 rounded-full font-bold text-lg hover:bg-green-400 transition-all shadow-[0_0_20px_rgba(0,230,118,0.4)] hover:shadow-[0_0_30px_rgba(0,230,118,0.6)] text-center">
+                            <a href="#how-it-works"
+                                class="bg-brand-primary text-brand-dark px-8 py-4 rounded-full font-bold text-lg hover:bg-green-400 transition-all shadow-[0_0_20px_rgba(0,230,118,0.4)] hover:shadow-[0_0_30px_rgba(0,230,118,0.6)] text-center">
                                 ทำความรู้จักเทคโนโลยีของเรา
                             </a>
-                            <a href="#contact" class="px-8 py-4 rounded-full font-bold text-lg border border-gray-600 hover:border-gray-400 hover:bg-gray-800 transition-all text-center flex items-center justify-center gap-2">
+                            <a href="#contact"
+                                class="px-8 py-4 rounded-full font-bold text-lg border border-gray-600 hover:border-gray-400 hover:bg-gray-800 transition-all text-center flex items-center justify-center gap-2">
                                 <i class="fa-regular fa-envelope"></i> ติดต่อองค์กร
                             </a>
                         </div>
                     </div>
-                    
+
                     <div class="lg:col-span-6 relative">
                         <!-- Simulated Trading Dashboard Graphic -->
                         <div class="glass-panel p-6 rounded-2xl shadow-2xl relative animate-float">
@@ -177,12 +216,12 @@
                                     <p class="text-xs text-brand-primary">+2.4% (24h)</p>
                                 </div>
                             </div>
-                            
+
                             <!-- Animated CSS Candles -->
                             <div class="candle-container border-b border-l border-gray-700 pb-2 pl-2" id="hero-chart">
                                 <!-- Candles will be generated by JS -->
                             </div>
-                            
+
                             <div class="mt-4 flex gap-2">
                                 <div class="flex-1 bg-gray-800/50 p-3 rounded-lg border border-gray-700">
                                     <p class="text-xs text-gray-400 mb-1">Pattern Detected</p>
@@ -208,15 +247,21 @@
                 <div class="text-center max-w-3xl mx-auto mb-16">
                     <h2 class="text-brand-primary font-semibold tracking-wide uppercase mb-2">Platform Preview</h2>
                     <h3 class="text-3xl md:text-4xl font-bold mb-4">หน้าจอแสดงผลการวิเคราะห์</h3>
-                    <p class="text-gray-400">สัมผัสประสบการณ์การใช้งานระบบที่ผสาน Price Action เข้ากับโมเดล AI ขั้นสูง บนอินเทอร์เฟซแบบมืออาชีพที่ประมวลผลข้อมูลแบบ Real-time</p>
+                    <p class="text-gray-400">สัมผัสประสบการณ์การใช้งานระบบที่ผสาน Price Action เข้ากับโมเดล AI ขั้นสูง
+                        บนอินเทอร์เฟซแบบมืออาชีพที่ประมวลผลข้อมูลแบบ Real-time</p>
                 </div>
 
-                <div class="rounded-xl border border-[#2a2e39] bg-[#131722] shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col h-[500px] lg:h-[600px] animate-float" style="animation-duration: 6s;">
+                <div class="rounded-xl border border-[#2a2e39] bg-[#131722] shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col h-[500px] lg:h-[600px] animate-float"
+                    style="animation-duration: 6s;">
                     <!-- Toolbar -->
-                    <div class="flex items-center justify-between px-4 py-3 border-b border-[#2a2e39] bg-[#1e222d] text-sm">
+                    <div
+                        class="flex items-center justify-between px-4 py-3 border-b border-[#2a2e39] bg-[#1e222d] text-sm">
                         <div class="flex items-center gap-4 text-gray-300">
                             <div class="flex items-center gap-2 font-bold text-white border-r border-[#2a2e39] pr-4">
-                                <div class="w-6 h-6 rounded-full bg-yellow-500 flex items-center justify-center text-black"><i class="fa-brands fa-bitcoin"></i></div>
+                                <div
+                                    class="w-6 h-6 rounded-full bg-yellow-500 flex items-center justify-center text-black">
+                                    <i class="fa-brands fa-bitcoin"></i>
+                                </div>
                                 BTC/USDT
                             </div>
                             <div class="flex gap-3 border-r border-[#2a2e39] pr-4 hidden sm:flex">
@@ -226,66 +271,84 @@
                                 <span class="hover:text-white cursor-pointer transition-colors">1D</span>
                             </div>
                             <div class="flex gap-4 text-gray-400">
-                                <span class="hidden md:flex items-center gap-1.5 cursor-pointer hover:text-white transition-colors"><i class="fa-solid fa-chart-line"></i> Indicators</span>
-                                <span class="flex items-center gap-1.5 cursor-pointer text-brand-primary"><i class="fa-solid fa-robot"></i> Money Trade AI Active</span>
+                                <span
+                                    class="hidden md:flex items-center gap-1.5 cursor-pointer hover:text-white transition-colors"><i
+                                        class="fa-solid fa-chart-line"></i> Indicators</span>
+                                <span class="flex items-center gap-1.5 cursor-pointer text-brand-primary"><i
+                                        class="fa-solid fa-robot"></i> Money Trade AI Active</span>
                             </div>
                         </div>
                         <div class="flex gap-4 text-gray-400">
-                            <i class="fa-solid fa-camera hover:text-white cursor-pointer transition-colors hidden sm:block"></i>
+                            <i
+                                class="fa-solid fa-camera hover:text-white cursor-pointer transition-colors hidden sm:block"></i>
                             <i class="fa-solid fa-cog hover:text-white cursor-pointer transition-colors"></i>
                             <i class="fa-solid fa-expand hover:text-white cursor-pointer transition-colors"></i>
                         </div>
                     </div>
-                    
+
                     <!-- Main Chart Area -->
                     <div class="flex-1 relative flex">
                         <!-- Chart Canvas / CSS representation -->
                         <div class="flex-1 relative bg-[#131722] overflow-hidden">
                             <!-- Price Grid Lines -->
-                            <div class="absolute inset-0 opacity-10" style="background-image: linear-gradient(#2a2e39 1px, transparent 1px), linear-gradient(90deg, #2a2e39 1px, transparent 1px); background-size: 50px 50px;"></div>
-                            
+                            <div class="absolute inset-0 opacity-10"
+                                style="background-image: linear-gradient(#2a2e39 1px, transparent 1px), linear-gradient(90deg, #2a2e39 1px, transparent 1px); background-size: 50px 50px;">
+                            </div>
+
                             <!-- Mock Chart Elements (SVG for lines/signals) -->
                             <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
                                 <svg class="w-full h-full opacity-90" viewBox="0 0 800 400" preserveAspectRatio="none">
                                     <!-- Fake EMA lines -->
-                                    <path d="M-50,380 Q150,350 300,280 T500,220 T700,100 T900,50" fill="none" stroke="#2979FF" stroke-width="2" class="opacity-70"></path>
-                                    <path d="M-50,400 Q200,320 350,290 T550,250 T750,150 T900,80" fill="none" stroke="#FF9800" stroke-width="2" class="opacity-70"></path>
-                                    
+                                    <path d="M-50,380 Q150,350 300,280 T500,220 T700,100 T900,50" fill="none"
+                                        stroke="#2979FF" stroke-width="2" class="opacity-70"></path>
+                                    <path d="M-50,400 Q200,320 350,290 T550,250 T750,150 T900,80" fill="none"
+                                        stroke="#FF9800" stroke-width="2" class="opacity-70"></path>
+
                                     <!-- AI Signal Overlays -->
                                     <g transform="translate(320, 260)">
-                                        <rect x="-55" y="-35" width="110" height="26" rx="4" fill="rgba(0, 230, 118, 0.15)" stroke="#00E676" stroke-width="1"></rect>
-                                        <text x="0" y="-17" fill="#00E676" font-size="11" font-family="sans-serif" text-anchor="middle" font-weight="bold">AI SIGNAL: BUY</text>
-                                        <line x1="0" y1="-9" x2="0" y2="20" stroke="#00E676" stroke-width="1.5" stroke-dasharray="3,3"></line>
+                                        <rect x="-55" y="-35" width="110" height="26" rx="4"
+                                            fill="rgba(0, 230, 118, 0.15)" stroke="#00E676" stroke-width="1"></rect>
+                                        <text x="0" y="-17" fill="#00E676" font-size="11" font-family="sans-serif"
+                                            text-anchor="middle" font-weight="bold">AI SIGNAL: BUY</text>
+                                        <line x1="0" y1="-9" x2="0" y2="20" stroke="#00E676" stroke-width="1.5"
+                                            stroke-dasharray="3,3"></line>
                                         <circle cx="0" cy="20" r="5" fill="#00E676"></circle>
                                     </g>
-                                    
+
                                     <g transform="translate(650, 110)">
-                                        <rect x="-55" y="25" width="110" height="26" rx="4" fill="rgba(255, 23, 68, 0.15)" stroke="#FF1744" stroke-width="1"></rect>
-                                        <text x="0" y="42" fill="#FF1744" font-size="11" font-family="sans-serif" text-anchor="middle" font-weight="bold">TAKE PROFIT</text>
-                                        <line x1="0" y1="25" x2="0" y2="-5" stroke="#FF1744" stroke-width="1.5" stroke-dasharray="3,3"></line>
+                                        <rect x="-55" y="25" width="110" height="26" rx="4"
+                                            fill="rgba(255, 23, 68, 0.15)" stroke="#FF1744" stroke-width="1"></rect>
+                                        <text x="0" y="42" fill="#FF1744" font-size="11" font-family="sans-serif"
+                                            text-anchor="middle" font-weight="bold">TAKE PROFIT</text>
+                                        <line x1="0" y1="25" x2="0" y2="-5" stroke="#FF1744" stroke-width="1.5"
+                                            stroke-dasharray="3,3"></line>
                                         <circle cx="0" cy="-5" r="5" fill="#FF1744"></circle>
                                     </g>
                                 </svg>
                             </div>
 
                             <!-- CSS Candles for Chart Area -->
-                            <div class="absolute bottom-12 left-6 right-20 top-10 flex items-end justify-between gap-[2px] opacity-80" id="mockup-chart-container">
+                            <div class="absolute bottom-12 left-6 right-20 top-10 flex items-end justify-between gap-[2px] opacity-80"
+                                id="mockup-chart-container">
                                 <!-- Candles populated by JS -->
                             </div>
-                            
+
                             <!-- Price Axis (Right) -->
-                            <div class="absolute right-0 top-0 bottom-0 w-16 border-l border-[#2a2e39] bg-[#1e222d] text-[10px] text-gray-500 flex flex-col justify-between py-10 items-center z-20">
+                            <div
+                                class="absolute right-0 top-0 bottom-0 w-16 border-l border-[#2a2e39] bg-[#1e222d] text-[10px] text-gray-500 flex flex-col justify-between py-10 items-center z-20">
                                 <span>65,000</span>
                                 <span>64,500</span>
-                                <span class="bg-brand-secondary text-white px-1.5 py-0.5 rounded w-14 text-center font-bold">64,230.5</span>
+                                <span
+                                    class="bg-brand-secondary text-white px-1.5 py-0.5 rounded w-14 text-center font-bold">64,230.5</span>
                                 <span>64,000</span>
                                 <span>63,500</span>
                                 <span>63,000</span>
                                 <span>62,500</span>
                             </div>
-                            
+
                             <!-- Time Axis (Bottom) -->
-                            <div class="absolute bottom-0 left-0 right-16 h-8 border-t border-[#2a2e39] bg-[#1e222d] text-[10px] text-gray-500 flex justify-between px-10 items-center z-20">
+                            <div
+                                class="absolute bottom-0 left-0 right-16 h-8 border-t border-[#2a2e39] bg-[#1e222d] text-[10px] text-gray-500 flex justify-between px-10 items-center z-20">
                                 <span>08:00</span>
                                 <span>10:00</span>
                                 <span>12:00</span>
@@ -299,23 +362,29 @@
                         <!-- Sidebar Panel (AI Analysis) -->
                         <div class="w-64 border-l border-[#2a2e39] bg-[#1e222d] hidden lg:flex flex-col z-20">
                             <div class="p-4 border-b border-[#2a2e39]">
-                                <h4 class="text-white font-semibold text-sm flex items-center gap-2"><i class="fa-solid fa-microchip text-brand-secondary"></i> AI Live Analysis</h4>
+                                <h4 class="text-white font-semibold text-sm flex items-center gap-2"><i
+                                        class="fa-solid fa-microchip text-brand-secondary"></i> AI Live Analysis</h4>
                             </div>
                             <div class="p-4 space-y-5 flex-1 overflow-y-auto custom-scrollbar">
                                 <div>
                                     <div class="text-xs text-gray-400 mb-1">Current Trend State</div>
-                                    <div class="text-brand-primary font-bold text-sm flex items-center gap-2">Strong Bullish <i class="fa-solid fa-arrow-trend-up"></i></div>
+                                    <div class="text-brand-primary font-bold text-sm flex items-center gap-2">Strong
+                                        Bullish <i class="fa-solid fa-arrow-trend-up"></i></div>
                                 </div>
                                 <div>
                                     <div class="text-xs text-gray-400 mb-1.5">Price Action Pattern</div>
-                                    <div class="text-white text-sm bg-[#131722] p-2.5 rounded border border-[#2a2e39] flex items-center gap-2">
+                                    <div
+                                        class="text-white text-sm bg-[#131722] p-2.5 rounded border border-[#2a2e39] flex items-center gap-2">
                                         <i class="fa-solid fa-shapes text-gray-400"></i> Bullish Flag Breakout
                                     </div>
                                 </div>
                                 <div>
                                     <div class="text-xs text-gray-400 mb-2">Key ML Levels</div>
-                                    <div class="flex justify-between text-sm mb-1.5"><span class="text-gray-500">Resist (R1):</span> <span class="text-red-400 font-medium">65,120</span></div>
-                                    <div class="flex justify-between text-sm"><span class="text-gray-500">Support (S1):</span> <span class="text-brand-primary font-medium">63,850</span></div>
+                                    <div class="flex justify-between text-sm mb-1.5"><span class="text-gray-500">Resist
+                                            (R1):</span> <span class="text-red-400 font-medium">65,120</span></div>
+                                    <div class="flex justify-between text-sm"><span class="text-gray-500">Support
+                                            (S1):</span> <span class="text-brand-primary font-medium">63,850</span>
+                                    </div>
                                 </div>
                                 <div class="pt-4 border-t border-[#2a2e39]">
                                     <div class="flex justify-between items-end mb-2">
@@ -327,8 +396,10 @@
                                     </div>
                                 </div>
                                 <div class="bg-brand-primary/10 border border-brand-primary/20 rounded-lg p-3 mt-4">
-                                    <div class="text-xs text-brand-primary font-bold mb-1"><i class="fa-solid fa-bolt"></i> Action Required</div>
-                                    <div class="text-xs text-gray-300 leading-relaxed">Conditions met for Long position. Suggested RR is 1:2.5.</div>
+                                    <div class="text-xs text-brand-primary font-bold mb-1"><i
+                                            class="fa-solid fa-bolt"></i> Action Required</div>
+                                    <div class="text-xs text-gray-300 leading-relaxed">Conditions met for Long position.
+                                        Suggested RR is 1:2.5.</div>
                                 </div>
                             </div>
                         </div>
@@ -342,17 +413,21 @@
                 <div class="text-center max-w-3xl mx-auto mb-16">
                     <h2 class="text-brand-primary font-semibold tracking-wide uppercase mb-2">บุคลากรของเรา</h2>
                     <h3 class="text-3xl md:text-4xl font-bold mb-4">สมาชิกและทีมวิจัย</h3>
-                    <p class="text-gray-400">ทำความรู้จักกับทีมนักพัฒนา วิศวกร AI และผู้เชี่ยวชาญด้านการเงินที่ร่วมกันขับเคลื่อนนวัตกรรมของ Money Trade</p>
+                    <p class="text-gray-400">ทำความรู้จักกับทีมนักพัฒนา วิศวกร AI
+                        และผู้เชี่ยวชาญด้านการเงินที่ร่วมกันขับเคลื่อนนวัตกรรมของ Money Trade</p>
                 </div>
 
                 <div class="relative z-10 max-w-4xl mx-auto">
                     <!-- CEO Level -->
                     <div class="flex justify-center mb-12 relative">
                         <!-- Connecting line to bottom -->
-                        <div class="absolute top-full left-1/2 w-px h-12 bg-gray-700 -translate-x-1/2 hidden md:block"></div>
-                        
-                        <div class="glass-panel p-6 rounded-2xl border border-brand-primary/40 text-center w-72 shadow-[0_0_20px_rgba(0,230,118,0.15)] relative z-10 bg-[#0B0F19]">
-                            <img src="ceo.jpg" alt="กษิดิ์เดช กลิ่นโพธิ์กลับ" class="w-20 h-20 mx-auto rounded-full object-cover mb-4 border-2 border-brand-primary shadow-[0_0_15px_rgba(0,230,118,0.3)]">
+                        <div class="absolute top-full left-1/2 w-px h-12 bg-gray-700 -translate-x-1/2 hidden md:block">
+                        </div>
+
+                        <div
+                            class="glass-panel p-6 rounded-2xl border border-brand-primary/40 text-center w-72 shadow-[0_0_20px_rgba(0,230,118,0.15)] relative z-10 bg-[#0B0F19]">
+                            <img src="ceo.jpg" alt="กษิดิ์เดช กลิ่นโพธิ์กลับ"
+                                class="w-20 h-20 mx-auto rounded-full object-cover mb-4 border-2 border-brand-primary shadow-[0_0_15px_rgba(0,230,118,0.3)]">
                             <h4 class="font-bold text-xl text-white">กษิดิ์เดช กลิ่นโพธิ์กลับ</h4>
                             <p class="text-sm text-brand-primary font-bold mt-1 tracking-wide">CEO</p>
                             <p class="text-xs text-gray-400 mt-2">Chief Executive Officer</p>
@@ -367,26 +442,32 @@
 
                     <!-- Department Level -->
                     <div class="grid md:grid-cols-2 gap-8 mb-16">
-                        
+
                         <!-- Technology Dept (CTO & DevOps) -->
                         <div class="glass-panel p-6 rounded-2xl border border-gray-700 relative bg-[#0B0F19]">
-                            <div class="absolute -top-3 left-6 bg-[#0B0F19] px-3 text-xs text-brand-secondary font-semibold tracking-wider border border-gray-700 rounded-full">TECHNOLOGY</div>
-                            
+                            <div
+                                class="absolute -top-3 left-6 bg-[#0B0F19] px-3 text-xs text-brand-secondary font-semibold tracking-wider border border-gray-700 rounded-full">
+                                TECHNOLOGY</div>
+
                             <!-- CTO -->
-                            <div class="flex items-center gap-4 mb-6 p-4 bg-gray-800/40 rounded-xl border border-gray-700/50">
-                                 <img src="cto.jpg" alt="จิรภิณโญ เชียงกา" class="w-14 h-14 rounded-full object-cover border border-brand-secondary shrink-0">
-                                 <div>
-                                     <h4 class="font-bold text-white text-lg">จิรภิณโญ เชียงกา</h4>
-                                     <p class="text-sm text-brand-secondary font-semibold">CTO</p>
-                                 </div>
+                            <div
+                                class="flex items-center gap-4 mb-6 p-4 bg-gray-800/40 rounded-xl border border-gray-700/50">
+                                <img src="cto.jpg" alt="จิรภิณโญ เชียงกา"
+                                    class="w-14 h-14 rounded-full object-cover border border-brand-secondary shrink-0">
+                                <div>
+                                    <h4 class="font-bold text-white text-lg">จิรภิณโญ เชียงกา</h4>
+                                    <p class="text-sm text-brand-secondary font-semibold">CTO</p>
+                                </div>
                             </div>
-                            
+
                             <!-- DevOps Team -->
                             <div class="pl-7 border-l-2 border-gray-700 ml-6 space-y-4">
                                 <div class="relative hover:-translate-y-1 transition-transform">
                                     <div class="absolute -left-7 top-1/2 w-7 border-t-2 border-gray-700"></div>
-                                    <div class="flex items-center gap-3 bg-[#131722] p-3 rounded-lg border border-gray-800 hover:border-gray-600 transition-colors">
-                                        <img src="devops-1.jpg" alt="นพวรรณ อังคตรีรัตน์" class="w-10 h-10 rounded-full object-cover border border-gray-700 shrink-0">
+                                    <div
+                                        class="flex items-center gap-3 bg-[#131722] p-3 rounded-lg border border-gray-800 hover:border-gray-600 transition-colors">
+                                        <img src="devops-1.jpg" alt="นพวรรณ อังคตรีรัตน์"
+                                            class="w-10 h-10 rounded-full object-cover border border-gray-700 shrink-0">
                                         <div>
                                             <h5 class="text-sm font-semibold text-gray-200">นพวรรณ อังคตรีรัตน์</h5>
                                             <p class="text-xs text-gray-500">DevOps Engineer</p>
@@ -395,8 +476,10 @@
                                 </div>
                                 <div class="relative hover:-translate-y-1 transition-transform">
                                     <div class="absolute -left-7 top-1/2 w-7 border-t-2 border-gray-700"></div>
-                                    <div class="flex items-center gap-3 bg-[#131722] p-3 rounded-lg border border-gray-800 hover:border-gray-600 transition-colors">
-                                        <img src="devops-2.png" alt="กรลมล โตโส" class="w-10 h-10 rounded-full object-cover border border-gray-700 shrink-0">
+                                    <div
+                                        class="flex items-center gap-3 bg-[#131722] p-3 rounded-lg border border-gray-800 hover:border-gray-600 transition-colors">
+                                        <img src="devops-2.png" alt="กรลมล โตโส"
+                                            class="w-10 h-10 rounded-full object-cover border border-gray-700 shrink-0">
                                         <div>
                                             <h5 class="text-sm font-semibold text-gray-200">กรลมล โตโส</h5>
                                             <p class="text-xs text-gray-500">DevOps Engineer</p>
@@ -408,23 +491,29 @@
 
                         <!-- Data & AI Dept (Data Lead & AI Engineer) -->
                         <div class="glass-panel p-6 rounded-2xl border border-gray-700 relative bg-[#0B0F19]">
-                            <div class="absolute -top-3 left-6 bg-[#0B0F19] px-3 text-xs text-purple-400 font-semibold tracking-wider border border-gray-700 rounded-full">AI & DATA</div>
-                            
+                            <div
+                                class="absolute -top-3 left-6 bg-[#0B0F19] px-3 text-xs text-purple-400 font-semibold tracking-wider border border-gray-700 rounded-full">
+                                AI & DATA</div>
+
                             <!-- Data Lead -->
-                            <div class="flex items-center gap-4 mb-6 p-4 bg-gray-800/40 rounded-xl border border-gray-700/50">
-                                 <img src="data-lead.jpg" alt="อนุวัฒน์ ลู่สัจวัฒนา" class="w-14 h-14 rounded-full object-cover border border-purple-500 shrink-0">
-                                 <div>
-                                     <h4 class="font-bold text-white text-lg">อนุวัฒน์ ลู่สัจวัฒนา</h4>
-                                     <p class="text-sm text-purple-400 font-semibold">Data Lead</p>
-                                 </div>
+                            <div
+                                class="flex items-center gap-4 mb-6 p-4 bg-gray-800/40 rounded-xl border border-gray-700/50">
+                                <img src="data-lead.jpg" alt="อนุวัฒน์ ลู่สัจวัฒนา"
+                                    class="w-14 h-14 rounded-full object-cover border border-purple-500 shrink-0">
+                                <div>
+                                    <h4 class="font-bold text-white text-lg">อนุวัฒน์ ลู่สัจวัฒนา</h4>
+                                    <p class="text-sm text-purple-400 font-semibold">Data Lead</p>
+                                </div>
                             </div>
-                            
+
                             <!-- AI Engineers -->
                             <div class="pl-7 border-l-2 border-gray-700 ml-6 space-y-4">
                                 <div class="relative hover:-translate-y-1 transition-transform">
                                     <div class="absolute -left-7 top-1/2 w-7 border-t-2 border-gray-700"></div>
-                                    <div class="flex items-center gap-3 bg-[#131722] p-3 rounded-lg border border-gray-800 hover:border-gray-600 transition-colors">
-                                        <img src="ai-1.jpg" alt="อโนชา สาดสะดี" class="w-10 h-10 rounded-full object-cover border border-gray-700 shrink-0">
+                                    <div
+                                        class="flex items-center gap-3 bg-[#131722] p-3 rounded-lg border border-gray-800 hover:border-gray-600 transition-colors">
+                                        <img src="ai-1.jpg" alt="อโนชา สาดสะดี"
+                                            class="w-10 h-10 rounded-full object-cover border border-gray-700 shrink-0">
                                         <div>
                                             <h5 class="text-sm font-semibold text-gray-200">อโนชา สาดสะดี</h5>
                                             <p class="text-xs text-gray-500">AI Engineer</p>
@@ -433,8 +522,10 @@
                                 </div>
                                 <div class="relative hover:-translate-y-1 transition-transform">
                                     <div class="absolute -left-7 top-1/2 w-7 border-t-2 border-gray-700"></div>
-                                    <div class="flex items-center gap-3 bg-[#131722] p-3 rounded-lg border border-gray-800 hover:border-gray-600 transition-colors">
-                                        <img src="ai-2.jpg" alt="ศศิธร ปาโส" class="w-10 h-10 rounded-full object-cover border border-gray-700 shrink-0">
+                                    <div
+                                        class="flex items-center gap-3 bg-[#131722] p-3 rounded-lg border border-gray-800 hover:border-gray-600 transition-colors">
+                                        <img src="ai-2.jpg" alt="ศศิธร ปาโส"
+                                            class="w-10 h-10 rounded-full object-cover border border-gray-700 shrink-0">
                                         <div>
                                             <h5 class="text-sm font-semibold text-gray-200">ศศิธร ปาโส</h5>
                                             <p class="text-xs text-gray-500">AI Engineer</p>
@@ -443,8 +534,10 @@
                                 </div>
                                 <div class="relative hover:-translate-y-1 transition-transform">
                                     <div class="absolute -left-7 top-1/2 w-7 border-t-2 border-gray-700"></div>
-                                    <div class="flex items-center gap-3 bg-[#131722] p-3 rounded-lg border border-gray-800 hover:border-gray-600 transition-colors">
-                                        <img src="ai-3.jpg" alt="ศุภโชค ชมภูพื้น" class="w-10 h-10 rounded-full object-cover border border-gray-700 shrink-0">
+                                    <div
+                                        class="flex items-center gap-3 bg-[#131722] p-3 rounded-lg border border-gray-800 hover:border-gray-600 transition-colors">
+                                        <img src="ai-3.jpg" alt="ศุภโชค ชมภูพื้น"
+                                            class="w-10 h-10 rounded-full object-cover border border-gray-700 shrink-0">
                                         <div>
                                             <h5 class="text-sm font-semibold text-gray-200">ศุภโชค ชมภูพื้น</h5>
                                             <p class="text-xs text-gray-500">AI Engineer</p>
@@ -457,18 +550,25 @@
                 </div>
 
                 <div class="flex justify-center relative z-10">
-                    <a href="https://github.com/orgs/money-trade/people" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-5 bg-gray-900/80 hover:bg-gray-800 px-6 py-4 rounded-xl border border-gray-700 hover:border-brand-primary/50 transition-all shadow-lg hover:shadow-[0_0_20px_rgba(0,230,118,0.2)]">
-                        <i class="fa-brands fa-github text-3xl text-white group-hover:text-brand-primary transition-colors"></i>
+                    <a href="https://github.com/orgs/money-trade/people" target="_blank" rel="noopener noreferrer"
+                        class="group flex items-center gap-5 bg-gray-900/80 hover:bg-gray-800 px-6 py-4 rounded-xl border border-gray-700 hover:border-brand-primary/50 transition-all shadow-lg hover:shadow-[0_0_20px_rgba(0,230,118,0.2)]">
+                        <i
+                            class="fa-brands fa-github text-3xl text-white group-hover:text-brand-primary transition-colors"></i>
                         <div class="text-left">
-                            <div class="font-bold text-base text-white group-hover:text-brand-primary transition-colors">ดูสมาชิกในองค์กรทั้งหมด</div>
+                            <div
+                                class="font-bold text-base text-white group-hover:text-brand-primary transition-colors">
+                                ดูสมาชิกในองค์กรทั้งหมด</div>
                             <div class="text-xs text-gray-400">ผ่าน GitHub Organization (money-trade)</div>
                         </div>
-                        <i class="fa-solid fa-arrow-up-right-from-square ml-2 text-gray-500 group-hover:text-brand-primary transition-colors text-sm"></i>
+                        <i
+                            class="fa-solid fa-arrow-up-right-from-square ml-2 text-gray-500 group-hover:text-brand-primary transition-colors text-sm"></i>
                     </a>
                 </div>
-                
+
                 <!-- Background decoration for team section -->
-                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg h-32 bg-brand-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
+                <div
+                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg h-32 bg-brand-primary/5 rounded-full blur-[100px] pointer-events-none">
+                </div>
             </div>
         </section>
 
@@ -477,8 +577,10 @@
             <div class="absolute inset-0 bg-gradient-to-r from-brand-primary/5 to-brand-secondary/5"></div>
             <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
                 <h2 class="text-3xl md:text-4xl font-bold mb-6">สนใจนำเทคโนโลยีของเราไปใช้งาน หรือร่วมงานกับเรา?</h2>
-                <p class="text-lg text-gray-300 mb-8">เราเปิดรับพันธมิตรทางธุรกิจ สถาบันการเงิน และผู้ที่สนใจต่อยอดงานวิจัยด้าน Machine Learning ในตลาดการเงิน</p>
-                <a href="#contact" class="inline-block bg-brand-primary text-brand-dark px-10 py-4 rounded-full font-bold text-xl hover:bg-green-400 transition-all shadow-[0_0_20px_rgba(0,230,118,0.4)]">
+                <p class="text-lg text-gray-300 mb-8">เราเปิดรับพันธมิตรทางธุรกิจ สถาบันการเงิน
+                    และผู้ที่สนใจต่อยอดงานวิจัยด้าน Machine Learning ในตลาดการเงิน</p>
+                <a href="#contact"
+                    class="inline-block bg-brand-primary text-brand-dark px-10 py-4 rounded-full font-bold text-xl hover:bg-green-400 transition-all shadow-[0_0_20px_rgba(0,230,118,0.4)]">
                     ติดต่อพูดคุยกับทีมงาน
                 </a>
             </div>
@@ -494,15 +596,19 @@
                         <span class="font-bold text-xl">Money<span class="text-brand-primary">Trade</span></span>
                     </div>
                     <p class="text-gray-500 text-sm mb-6">
-                        องค์กรวิจัยและพัฒนาแบบจำลอง AI ด้วยเทคโนโลยี Machine Learning และการวิเคราะห์ Price Action เชิงลึก
+                        องค์กรวิจัยและพัฒนาแบบจำลอง AI ด้วยเทคโนโลยี Machine Learning และการวิเคราะห์ Price Action
+                        เชิงลึก
                     </p>
                     <div class="flex gap-4">
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fa-brands fa-linkedin text-xl"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fa-brands fa-twitter text-xl"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fa-solid fa-envelope text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i
+                                class="fa-brands fa-linkedin text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i
+                                class="fa-brands fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i
+                                class="fa-solid fa-envelope text-xl"></i></a>
                     </div>
                 </div>
-                
+
                 <div>
                     <h4 class="font-bold mb-4">โครงสร้างองค์กร</h4>
                     <ul class="space-y-2 text-sm text-gray-500">
@@ -512,7 +618,7 @@
                         <li><a href="#" class="hover:text-brand-primary">พันธมิตรทางธุรกิจ</a></li>
                     </ul>
                 </div>
-                
+
                 <div>
                     <h4 class="font-bold mb-4">ผลงานและบทความ</h4>
                     <ul class="space-y-2 text-sm text-gray-500">
@@ -532,7 +638,7 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
                 <p class="text-gray-600 text-sm">© 2026 Money Trade Organization. All rights reserved.</p>
                 <div class="flex gap-4 mt-4 md:mt-0 text-sm text-gray-600">
@@ -569,39 +675,39 @@
             // Hero Chart Animation Setup (Simulating Candlesticks)
             const chartContainer = document.getElementById('hero-chart');
             const numCandles = Math.floor(chartContainer.clientWidth / 36); // Roughly calc how many fit
-            
+
             // Generate mock candlestick data
             let currentPrice = 50;
-            
-            for(let i=0; i<15; i++) {
+
+            for (let i = 0; i < 15; i++) {
                 const isBullish = Math.random() > 0.4; // 60% chance bullish for uptrend effect
                 const bodyHeight = Math.random() * 40 + 10;
                 const wickHeight = bodyHeight + Math.random() * 30 + 10;
                 const yOffset = currentPrice;
-                
+
                 const candleEl = document.createElement('div');
                 candleEl.className = `candle ${isBullish ? 'bullish' : 'bearish'}`;
                 candleEl.style.height = `${bodyHeight}px`;
                 candleEl.style.marginBottom = `${yOffset}px`;
-                
+
                 // Add slight animation delay for wave effect
                 candleEl.style.animationDelay = `${i * 0.1}s`;
-                
+
                 const wickEl = document.createElement('div');
                 wickEl.className = 'wick';
                 wickEl.style.height = `${wickHeight}px`;
                 wickEl.style.bottom = `-${(wickHeight - bodyHeight) / 2}px`;
-                
+
                 candleEl.appendChild(wickEl);
                 chartContainer.appendChild(candleEl);
-                
+
                 // update price trend
-                if(isBullish) {
+                if (isBullish) {
                     currentPrice += (Math.random() * 20);
                 } else {
                     currentPrice -= (Math.random() * 15);
                 }
-                
+
                 // keep in bounds
                 if (currentPrice < 10) currentPrice = 10;
                 if (currentPrice > 120) currentPrice = 120;
@@ -610,22 +716,22 @@
             const mockupContainer = document.getElementById('mockup-chart-container');
             if (mockupContainer) {
                 // Generate around 60 candles to fill the flex container nicely
-                const mockupCandlesCount = 60; 
+                const mockupCandlesCount = 60;
                 let mockupPrice = 20; // Starting baseline
-                
-                for(let i=0; i<mockupCandlesCount; i++) {
+
+                for (let i = 0; i < mockupCandlesCount; i++) {
                     // Create an upward trend with pullbacks
                     const isBullish = Math.random() > 0.45; // 55% chance bullish
-                    
+
                     const bodyHeight = Math.random() * 40 + 5;
                     const wickHeight = bodyHeight + Math.random() * 30 + 5;
-                    
+
                     if (isBullish) {
                         mockupPrice += (Math.random() * 12);
                     } else {
                         mockupPrice -= (Math.random() * 8);
                     }
-                    
+
                     // Constrain
                     if (mockupPrice < 5) mockupPrice = 5;
                     if (mockupPrice > 300) mockupPrice = 300;
@@ -637,12 +743,12 @@
                     candleEl.style.marginBottom = `${mockupPrice}px`;
                     candleEl.style.animation = 'none'; // Keep static for UI clean look
                     candleEl.style.flexShrink = '0';
-                    
+
                     const wickEl = document.createElement('div');
                     wickEl.className = 'wick';
                     wickEl.style.height = `${wickHeight}px`;
                     wickEl.style.bottom = `-${(wickHeight - bodyHeight) / 2}px`;
-                    
+
                     candleEl.appendChild(wickEl);
                     mockupContainer.appendChild(candleEl);
                 }
@@ -661,4 +767,5 @@
         });
     </script>
 </body>
+
 </html>
