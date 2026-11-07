@@ -1,0 +1,896 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mudra → Text</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="ระบบแปลท่ามือเป็นปางพระพุทธรูป ทำท่ามือหน้ากล้องแล้วได้ชื่อปาง ลักษณะท่า และความหมายเป็นข้อความภาษาไทย">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chonburi&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600&display=swap">
+<style>
+  /* Layout: รักดำปิดทอง (black lacquer, gold leaf). One 70rem column; the annotated app screenshot is the centrepiece,
+     sections stack below it separated by hairline gold-brown rules. Deliberately single dark theme, matching the app UI. */
+  :root {
+    color-scheme: dark;
+    --lacquer: #14110d;
+    --lacquer-2: #1c1813;
+    --lacquer-3: #282119;
+    --rule: #3a3123;
+    --ivory: #f0e7d5;
+    --ash: #a89c86;
+    --gold: #e2b04a;
+    --gold-dim: #a07c34;
+    --gold-wash: rgba(226, 176, 74, 0.13);
+
+    --f-display: "Chonburi", "Noto Serif Thai", "Leelawadee UI", Georgia, serif;
+    --f-body: "IBM Plex Sans Thai Looped", "Noto Sans Thai Looped", "Leelawadee UI", Tahoma, sans-serif;
+    --f-mono: "IBM Plex Mono", "IBM Plex Sans Thai Looped", ui-monospace, Consolas, monospace;
+
+    --s-xs: 0.8125rem;
+    --s-sm: 0.9375rem;
+    --s-md: 1.0625rem;
+    --s-lg: 1.25rem;
+    --s-xl: 1.625rem;
+    --s-2xl: clamp(1.75rem, 3.4vw, 2.5rem);
+    --s-3xl: clamp(1.75rem, 4.6vw, 3.6rem);
+
+    --wrap: 72rem;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+  body {
+    margin: 0;
+    background: var(--lacquer);
+    background-image: radial-gradient(56rem 32rem at 88% -8%, var(--gold-wash), transparent 70%);
+    background-repeat: no-repeat;
+    color: var(--ivory);
+    font-family: var(--f-body);
+    font-size: var(--s-md);
+    line-height: 1.75;
+  }
+
+  img { max-width: 100%; height: auto; display: block; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+
+  .wrap {
+    max-width: var(--wrap);
+    margin-inline: auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  @media (min-width: 720px) {
+    .wrap {
+      padding-left: max(32px, env(safe-area-inset-left, 0px));
+      padding-right: max(32px, env(safe-area-inset-right, 0px));
+    }
+  }
+
+  .label {
+    margin: 0;
+    font-family: var(--f-mono);
+    font-size: var(--s-xs);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  h1, h2, h3 { margin: 0; font-weight: 400; text-wrap: balance; }
+  h2 { font-family: var(--f-display); font-size: var(--s-2xl); line-height: 1.4; }
+  p { margin: 0; }
+
+  /* ---------- top bar ---------- */
+  .top .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 2rem;
+    padding-block: 1.25rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+    font-family: var(--f-mono);
+    font-size: var(--s-sm);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .brand svg { width: 28px; height: 28px; color: var(--gold); flex: none; }
+  .nav { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; font-size: var(--s-sm); }
+  .nav a { color: var(--ash); text-decoration: none; padding-block: 0.25rem; }
+  .nav a:hover { color: var(--ivory); }
+
+  /* ---------- hero ---------- */
+  .hero .wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: 2.5rem 4rem;
+    align-items: end;
+    padding-block: 4rem 3.5rem;
+  }
+  .hero-text { display: grid; gap: 1.5rem; min-width: 0; }
+  .hero h1 {
+    font-family: var(--f-display);
+    font-size: var(--s-3xl);
+    line-height: 1.32;
+  }
+  .hero h1 .gold { color: var(--gold); }
+  .nw { white-space: nowrap; }
+  .lead { font-size: var(--s-lg); line-height: 1.75; max-width: 34em; }
+  .lead-sub { color: var(--ash); max-width: 38em; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0; margin: 0; list-style: none; }
+  .chips a {
+    display: inline-block;
+    padding: 0.2rem 0.85rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    font-size: var(--s-sm);
+    text-decoration: none;
+    color: var(--ivory);
+    transition: border-color 0.2s, background-color 0.2s;
+  }
+  .chips a:hover { border-color: var(--gold); background: var(--gold-wash); }
+
+  .cta { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    border-radius: 6px;
+    font-size: var(--s-sm);
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid var(--gold);
+    transition: background-color 0.2s, color 0.2s;
+  }
+  .btn-gold { background: var(--gold); color: var(--lacquer); }
+  .btn-gold:hover { background: var(--ivory); border-color: var(--ivory); }
+  .btn-line { color: var(--gold); }
+  .btn-line:hover { background: var(--gold-wash); }
+
+  .spec { margin: 0; border-top: 1px solid var(--gold-dim); min-width: 0; }
+  .spec div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: baseline;
+    padding-block: 0.7rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .spec dt { color: var(--ash); font-size: var(--s-sm); }
+  .spec dd {
+    margin: 0;
+    font-family: var(--f-mono);
+    font-size: var(--s-md);
+    font-weight: 500;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .spec dd.big { font-family: var(--f-display); font-size: var(--s-xl); color: var(--gold); line-height: 1.2; }
+
+  /* ---------- sections ---------- */
+  .sec .wrap { padding-block: 4.5rem; }
+  .sec + .sec .wrap { border-top: 1px solid var(--rule); }
+  .sec-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 1rem 3rem;
+    align-items: end;
+    margin-bottom: 2.5rem;
+  }
+  .sec-head > div { display: grid; gap: 0.6rem; min-width: 0; }
+  .sec-head > p { color: var(--ash); max-width: 36em; }
+
+  /* ---------- annotated screenshot ---------- */
+  .shot { position: relative; margin: 0; }
+  .shot img {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--rule);
+    box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(226, 176, 74, 0.06);
+  }
+  .region {
+    position: absolute;
+    border: 2px solid var(--gold);
+    border-radius: 4px;
+    background: var(--gold-wash);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  .region.is-on { opacity: 1; }
+  .pin {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border-radius: 50%;
+    border: 2px solid var(--lacquer);
+    background: var(--gold);
+    color: var(--lacquer);
+    font: 600 var(--s-xs) / 1 var(--f-mono);
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
+    transition: transform 0.15s, background-color 0.15s;
+  }
+  .pin.is-on { background: var(--ivory); transform: translate(-50%, -50%) scale(1.18); }
+  @media (max-width: 640px) {
+    .pin { width: 21px; height: 21px; border-width: 1.5px; font-size: 0.6875rem; }
+  }
+
+  .legend {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 1.5rem 3rem;
+    margin-top: 2.5rem;
+  }
+  .legend-col { display: grid; gap: 0.5rem; align-content: start; min-width: 0; }
+  .legend-col > .label { padding-inline: 1rem; margin-bottom: 0.25rem; }
+  .legend ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.25rem; }
+  .key {
+    display: grid;
+    grid-template-columns: 1.75rem minmax(0, 1fr);
+    gap: 0.85rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+  .key:hover, .key.is-on { background: var(--lacquer-2); border-color: var(--rule); }
+  .key.is-on { border-color: var(--gold-dim); }
+  .key .n {
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    border: 1px solid var(--gold-dim);
+    color: var(--gold);
+    font: 500 var(--s-xs) / 1 var(--f-mono);
+    margin-top: 0.15rem;
+  }
+  .key.is-on .n { background: var(--gold); color: var(--lacquer); border-color: var(--gold); }
+  .key strong { display: block; font-weight: 600; }
+  .key .d { display: block; color: var(--ash); font-size: var(--s-sm); line-height: 1.7; }
+
+  /* ---------- mudra ledger ---------- */
+  .ledger { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--gold-dim); }
+  .mudra {
+    display: grid;
+    grid-template-columns: 3.25rem minmax(0, 1.05fr) minmax(0, 1.3fr) minmax(0, 1.3fr);
+    gap: 1rem 2rem;
+    padding-block: 1.75rem;
+    border-bottom: 1px solid var(--rule);
+    scroll-margin-top: 1.5rem;
+  }
+  .mudra:target { background: linear-gradient(90deg, var(--gold-wash), transparent 70%); }
+  .mudra .idx {
+    font-family: var(--f-display);
+    font-size: var(--s-xl);
+    line-height: 1.2;
+    color: var(--gold);
+  }
+  .mudra .name { display: grid; gap: 0.35rem; align-content: start; min-width: 0; }
+  .mudra h3 { font-family: var(--f-display); font-size: var(--s-xl); line-height: 1.35; }
+  .mudra .alt { color: var(--ash); font-size: var(--s-sm); }
+  .mudra .latin { font-family: var(--f-mono); font-size: var(--s-xs); color: var(--gold); letter-spacing: 0.04em; }
+  .tag {
+    justify-self: start;
+    margin-top: 0.35rem;
+    padding: 0.1rem 0.6rem;
+    border-radius: 999px;
+    background: var(--gold-wash);
+    color: var(--gold);
+    font-size: var(--s-xs);
+  }
+  .mudra .cell { display: grid; gap: 0.3rem; align-content: start; min-width: 0; }
+  .mudra .cell .label { color: var(--ash); letter-spacing: 0.08em; }
+  .ledger-note { margin-top: 1.25rem; color: var(--ash); font-size: var(--s-sm); }
+
+  /* ---------- pipeline ---------- */
+  .stages {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--gold-dim);
+  }
+  .stage { padding: 1.75rem 2rem 2rem; border-left: 1px solid var(--rule); display: grid; gap: 1rem; align-content: start; min-width: 0; }
+  .stage:first-child { border-left: 0; padding-left: 0; }
+  .stage:last-child { padding-right: 0; }
+  .stage h3 { font-family: var(--f-display); font-size: var(--s-xl); line-height: 1.35; }
+  .stage ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.7rem; }
+  .stage li { position: relative; padding-left: 1.25rem; color: var(--ivory); font-size: var(--s-sm); line-height: 1.75; }
+  .stage li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.72em;
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+
+  .loop {
+    margin-top: 1.5rem;
+    padding: 1rem 1.25rem;
+    border: 1px dashed var(--gold-dim);
+    border-radius: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    align-items: baseline;
+    font-size: var(--s-sm);
+  }
+  .loop .label { flex: none; }
+
+  .detail {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+  .panel {
+    background: var(--lacquer-2);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+    min-width: 0;
+  }
+  .panel-title { font-family: var(--f-display); font-size: var(--s-lg); line-height: 1.4; }
+  .panel-note { color: var(--ash); font-size: var(--s-xs); }
+
+  .layers {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.75rem;
+    text-align: center;
+  }
+  .layers li { display: grid; gap: 0.35rem; justify-items: center; min-width: 0; }
+  .bar-area { height: 160px; width: 100%; display: flex; align-items: flex-end; justify-content: center; border-bottom: 1px solid var(--gold-dim); }
+  .bar {
+    width: min(56px, 80%);
+    height: var(--h);
+    background-image: radial-gradient(circle at center, var(--gold) 0 1.6px, transparent 2.2px);
+    background-size: 8px 8px;
+    background-position: center bottom;
+    background-color: var(--gold-wash);
+    border-radius: 3px 3px 0 0;
+  }
+  .layers b { font-family: var(--f-mono); font-weight: 500; font-size: var(--s-lg); font-variant-numeric: tabular-nums; }
+  .layers span.t { color: var(--ash); font-size: var(--s-xs); line-height: 1.5; }
+  .meta { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; font-family: var(--f-mono); font-size: var(--s-xs); color: var(--ash); }
+  .meta strong { color: var(--ivory); font-weight: 500; }
+
+  .out-main { font-weight: 600; font-size: var(--s-md); }
+  .out-main em { font-style: normal; color: var(--gold); }
+  .out-line { color: var(--ash); font-size: var(--s-sm); }
+  .out-line b { color: var(--ivory); font-weight: 500; }
+  .transcript {
+    margin: 0;
+    padding: 0.85rem 1rem;
+    list-style: none;
+    background: var(--lacquer);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    font-family: var(--f-mono);
+    font-size: var(--s-xs);
+    line-height: 1.9;
+    overflow-x: auto;
+  }
+  .transcript li { white-space: nowrap; }
+  .transcript time { color: var(--ash); margin-right: 0.5rem; }
+  .transcript .more { color: var(--ash); }
+  .summary { color: var(--gold); font-size: var(--s-sm); }
+
+  /* ---------- team ---------- */
+  .team {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+  .member {
+    display: grid;
+    justify-items: center;
+    align-content: start;
+    gap: 0.4rem;
+    padding: 1.75rem 1rem 1.5rem;
+    text-align: center;
+    border-top: 1px solid var(--gold-dim);
+    min-width: 0;
+  }
+  .avatar {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--lacquer-3);
+    box-shadow: 0 0 0 4px var(--lacquer), 0 0 0 5px var(--gold);
+    margin-bottom: 0.9rem;
+  }
+  .member .role {
+    font-family: var(--f-mono);
+    font-size: var(--s-xs);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .member h3 { font-size: var(--s-md); font-weight: 600; line-height: 1.55; }
+  .member .sid { font-family: var(--f-mono); font-size: var(--s-xs); color: var(--ash); font-variant-numeric: tabular-nums; letter-spacing: 0.04em; }
+
+  /* ---------- contact ---------- */
+  .contact {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1.5rem 3rem;
+    align-items: center;
+    padding: 2rem;
+    border: 1px solid var(--gold-dim);
+    border-radius: 8px;
+    background: linear-gradient(120deg, var(--gold-wash), transparent 60%), var(--lacquer-2);
+  }
+  .contact > div { display: grid; gap: 0.6rem; min-width: 0; }
+  .contact p { color: var(--ash); }
+  .gh {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--f-mono);
+    font-size: var(--s-lg);
+    font-weight: 500;
+    color: var(--gold);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .gh:hover { color: var(--ivory); }
+  .gh svg { width: 22px; height: 22px; flex: none; }
+
+  .foot .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 2rem;
+    padding-block: 2rem 2.5rem;
+    border-top: 1px solid var(--rule);
+    color: var(--ash);
+    font-size: var(--s-xs);
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 980px) {
+    .hero .wrap { grid-template-columns: minmax(0, 1fr); align-items: start; padding-block: 3rem; }
+    .team { grid-template-columns: minmax(0, 1fr); gap: 0; max-width: 36rem; }
+    .member {
+      grid-template-columns: 76px minmax(0, 1fr);
+      grid-template-rows: auto auto auto;
+      justify-items: start;
+      column-gap: 1.25rem;
+      row-gap: 0.1rem;
+      text-align: left;
+      padding: 1.1rem 0;
+    }
+    .avatar { grid-row: 1 / span 3; width: 76px; height: 76px; margin: 0; align-self: center; }
+    .detail { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 860px) {
+    .sec-head { grid-template-columns: minmax(0, 1fr); }
+    .stages { grid-template-columns: minmax(0, 1fr); }
+    .stage, .stage:first-child, .stage:last-child { border-left: 0; border-bottom: 1px solid var(--rule); padding: 1.5rem 0; }
+    .mudra { grid-template-columns: 2.5rem minmax(0, 1fr); }
+    .mudra .cell { grid-column: 2; }
+    .legend { grid-template-columns: minmax(0, 1fr); }
+    .contact { grid-template-columns: minmax(0, 1fr); padding: 1.5rem; }
+  }
+  @media (max-width: 600px) {
+    .hero h1 { font-size: clamp(1.75rem, 9vw, 2.6rem); }
+  }
+  @media (max-width: 480px) {
+    .layers { gap: 0.4rem; }
+    .bar-area { height: 130px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#overview" aria-label="Mudra → Text หน้าแรก">
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+        <circle cx="16" cy="16" r="12.5"/>
+        <circle cx="16" cy="16" r="3.2"/>
+        <path d="M16 3.5v9.3M16 19.2v9.3M3.5 16h9.3M19.2 16h9.3M7.2 7.2l6.5 6.5M18.3 18.3l6.5 6.5M24.8 7.2l-6.5 6.5M13.7 18.3l-6.5 6.5"/>
+        <circle cx="16" cy="2.6" r="1.3" fill="currentColor" stroke="none"/>
+        <circle cx="16" cy="29.4" r="1.3" fill="currentColor" stroke="none"/>
+        <circle cx="2.6" cy="16" r="1.3" fill="currentColor" stroke="none"/>
+        <circle cx="29.4" cy="16" r="1.3" fill="currentColor" stroke="none"/>
+      </svg>
+      <span>Mudra → Text</span>
+    </a>
+    <nav class="nav" aria-label="เมนูหลัก">
+      <a href="#screen">หน้าจอ</a>
+      <a href="#mudras">ปางที่รองรับ</a>
+      <a href="#how">การทำงาน</a>
+      <a href="#team">ทีม</a>
+      <a href="#contact">ติดต่อ</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="overview">
+    <div class="wrap">
+      <div class="hero-text">
+        <p class="label">Mudra → Text · ML + NLP</p>
+        <h1><span class="nw">ระบบแปลท่ามือ</span><br><span class="nw">เป็น<span class="gold">ปางพระพุทธรูป</span></span></h1>
+        <p class="lead">ผู้ใช้ทำท่ามือหน้ากล้อง โปรแกรมตรวจว่าเป็นปางอะไร แล้วแสดงผลเป็นข้อความภาษาไทย บอกชื่อปาง ลักษณะท่า และความหมาย</p>
+        <p class="lead-sub">ตอนนี้รองรับ 7 ท่าตามโฟลเดอร์ Raw Data</p>
+        <ul class="chips" aria-label="ปางที่รองรับ">
+          <li><a href="#mudra-1">ประทานอภัย</a></li>
+          <li><a href="#mudra-2">จินมุทรา</a></li>
+          <li><a href="#mudra-3">ปฐมเทศนา</a></li>
+          <li><a href="#mudra-4">กเษปณมุทรา</a></li>
+          <li><a href="#mudra-5">ชูนิ้วชี้</a></li>
+          <li><a href="#mudra-6">พนมมือ</a></li>
+          <li><a href="#mudra-7">แสดงธรรม</a></li>
+        </ul>
+        <div class="cta">
+          <a class="btn btn-gold" href="#screen">ดูหน้าจอโปรแกรม</a>
+          <a class="btn btn-line" href="https://github.com/money-trade" target="_blank" rel="noopener">GitHub ของทีม</a>
+        </div>
+      </div>
+
+      <dl class="spec" aria-label="ข้อมูลโมเดล">
+        <div><dt>ความแม่นยำบนชุดทดสอบ</dt><dd class="big">99.8%</dd></div>
+        <div><dt>ปางที่รองรับ</dt><dd>7 ปาง</dd></div>
+        <div><dt>ความเร็วขณะใช้งาน</dt><dd>23.7 FPS</dd></div>
+        <div><dt>โมเดลจำแนก</dt><dd>MLP 120-128-64-7</dd></div>
+        <div><dt>กรองผลตามเวลา</dt><dd>HMM</dd></div>
+        <div><dt>เวอร์ชันโมเดล</dt><dd>20261106_144528</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="sec" id="screen">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="label">ภาพจริงจากโปรแกรม</p>
+          <h2>หน้าจอโปรแกรม</h2>
+        </div>
+        <p>ฝั่งซ้ายเป็นภาพกล้องที่จับการเคลื่อนไหวและบริเวณมือ ฝั่งขวาเป็นชื่อปาง ความมั่นใจ ความหมาย และข้อความที่ถอดได้ต่อเนื่อง ชี้หรือแตะหมายเลขเพื่อดูว่าแต่ละส่วนคืออะไร</p>
+      </div>
+
+      <figure class="shot">
+        <img src="รูปตัวอย่าง%20โปรเจค.png" width="1530" height="1014"
+             alt="หน้าจอโปรแกรม Mudra → Text ขณะตรวจจับท่าพนมมือ ฝั่งซ้ายเป็นภาพกล้องพร้อมกรอบมือ ฝั่งขวาแสดงผลว่าเป็นนมัสการมุทรา มั่นใจ 100%">
+        <span class="region" data-k="1" style="left:1.2%;top:9.7%;width:52.3%;height:59.2%"></span>
+        <span class="region" data-k="2" style="left:1.2%;top:72.3%;width:19.6%;height:16.5%"></span>
+        <span class="region" data-k="3" style="left:22.1%;top:70%;width:31.4%;height:20.9%"></span>
+        <span class="region" data-k="4" style="left:1.2%;top:91.9%;width:80.5%;height:6.7%"></span>
+        <span class="region" data-k="5" style="left:54.6%;top:10.8%;width:44.1%;height:13.8%"></span>
+        <span class="region" data-k="6" style="left:54.6%;top:24.9%;width:44.1%;height:17.6%"></span>
+        <span class="region" data-k="7" style="left:54.6%;top:45.2%;width:44.1%;height:20.7%"></span>
+        <span class="region" data-k="8" style="left:54.6%;top:67.1%;width:44.1%;height:22.7%"></span>
+
+        <button type="button" class="pin" data-k="1" style="left:38.6%;top:15.6%" aria-label="1 ภาพจากกล้องและกรอบมือ">1</button>
+        <button type="button" class="pin" data-k="2" style="left:11%;top:71.4%" aria-label="2 ภาพที่โมเดลเห็นและรูปทรงมือ">2</button>
+        <button type="button" class="pin" data-k="3" style="left:51.4%;top:72.6%" aria-label="3 การเคลื่อนไหวและสถานะโมเดล">3</button>
+        <button type="button" class="pin" data-k="4" style="left:83.2%;top:94.2%" aria-label="4 แถบเครื่องมือ">4</button>
+        <button type="button" class="pin" data-k="5" style="left:98%;top:12.8%" aria-label="5 ผลการตรวจจับ">5</button>
+        <button type="button" class="pin" data-k="6" style="left:98%;top:26.6%" aria-label="6 ประโยคอธิบาย">6</button>
+        <button type="button" class="pin" data-k="7" style="left:98%;top:46.4%" aria-label="7 ความน่าจะเป็นของแต่ละปาง">7</button>
+        <button type="button" class="pin" data-k="8" style="left:98%;top:68.4%" aria-label="8 ข้อความที่ถอดได้">8</button>
+      </figure>
+
+      <div class="legend">
+        <div class="legend-col">
+          <p class="label">ฝั่งซ้าย · มองเห็นมือ</p>
+          <ol>
+            <li><button type="button" class="key" data-k="1"><span class="n">1</span><span><strong>ภาพจากกล้องและกรอบมือ (ROI)</strong><span class="d">วางมือในกรอบ ลากเมาส์เพื่อย้ายกรอบได้ พื้นที่สีเขียวคือส่วนที่ระบบมองว่าเป็นมือ และมีชื่อปางกำกับเหนือกรอบ</span></span></button></li>
+            <li><button type="button" class="key" data-k="2"><span class="n">2</span><span><strong>ภาพที่โมเดลเห็นและรูปทรงมือ</strong><span class="d">ภาพมือขาวดำที่ตัดออกมาจากกรอบ คู่กับรูปทรงมือ (mask) ที่ได้จากการแยกสีผิวออกจากพื้นหลัง</span></span></button></li>
+            <li><button type="button" class="key" data-k="3"><span class="n">3</span><span><strong>การเคลื่อนไหวและสถานะโมเดล</strong><span class="d">บอกว่ามือนิ่งหรือขยับเป็นกี่ % ของกรอบ พร้อม FPS โครงสร้างโมเดล เวอร์ชัน และความแม่นยำบนชุดทดสอบ</span></span></button></li>
+            <li><button type="button" class="key" data-k="4"><span class="n">4</span><span><strong>แถบเครื่องมือ</strong><span class="d">เก็บข้อมูลจริงรายปาง (ทีละภาพหรือต่อเนื่อง 20 ภาพ) ฝึกโมเดลใหม่ ปรับเทียบสีผิว ล้างและบันทึกข้อความ</span></span></button></li>
+          </ol>
+        </div>
+        <div class="legend-col">
+          <p class="label">ฝั่งขวา · ถอดเป็นข้อความ</p>
+          <ol>
+            <li><button type="button" class="key" data-k="5"><span class="n">5</span><span><strong>ผลการตรวจจับ</strong><span class="d">ชื่อปางภาษาไทย ชื่อสันสกฤต และแถบความมั่นใจ</span></span></button></li>
+            <li><button type="button" class="key" data-k="6"><span class="n">6</span><span><strong>ประโยคอธิบาย</strong><span class="d">ขึ้นต้นด้วย “ท่ามือนี้คือ …” พร้อมความมั่นใจ ตามด้วยลักษณะท่ามือและความหมายของปาง</span></span></button></li>
+            <li><button type="button" class="key" data-k="7"><span class="n">7</span><span><strong>ความน่าจะเป็นของแต่ละปาง</strong><span class="d">ค่าของทั้ง 7 ปางหลังกรองด้วย HMM เห็นได้ทันทีว่าโมเดลลังเลระหว่างปางไหน</span></span></button></li>
+            <li><button type="button" class="key" data-k="8"><span class="n">8</span><span><strong>ข้อความที่ถอดได้ (Transcript)</strong><span class="d">บันทึกปางที่ตรวจพบพร้อมเวลา และสรุปจำนวนท่ากับลำดับปางทั้งหมดไว้ด้านล่าง</span></span></button></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="mudras">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="label">7 ท่า · ตามโฟลเดอร์ Raw Data</p>
+          <h2>ปางที่รองรับ</h2>
+        </div>
+        <p>แต่ละปางมีชื่อ ลักษณะท่ามือ และความหมาย ซึ่งเป็นข้อความชุดเดียวกับที่โปรแกรมแสดงเมื่อตรวจพบท่านั้น</p>
+      </div>
+
+      <ol class="ledger">
+        <li class="mudra" id="mudra-1">
+          <span class="idx">1</span>
+          <div class="name">
+            <h3>ปางประทานอภัย</h3>
+            <span class="latin">Abhaya Mudra</span>
+          </div>
+          <div class="cell"><p class="label">ลักษณะท่ามือ</p><p>ยกมือขึ้นระดับอก ตั้งฝ่ามือหันออกด้านหน้า นิ้วทั้งห้าเหยียดชิดกันชี้ขึ้น</p></div>
+          <div class="cell"><p class="label">ความหมาย</p><p>การให้ความไม่หวาดกลัว การคุ้มครอง และการมอบความปลอดภัยแก่ผู้อื่น</p></div>
+        </li>
+        <li class="mudra" id="mudra-2">
+          <span class="idx">2</span>
+          <div class="name">
+            <h3>จินมุทรา</h3>
+            <span class="latin">Chin Mudra</span>
+          </div>
+          <div class="cell"><p class="label">ลักษณะท่ามือ</p><p>ปลายนิ้วโป้งแตะปลายนิ้วชี้เป็นวงกลม อีกสามนิ้วเหยียดตรงและแยกออกเล็กน้อย</p></div>
+          <div class="cell"><p class="label">ความหมาย</p><p>ปัญญาและการรู้แจ้ง การรวมจิตให้ตั้งมั่น นิยมใช้ขณะทำสมาธิ</p></div>
+        </li>
+        <li class="mudra" id="mudra-3">
+          <span class="idx">3</span>
+          <div class="name">
+            <h3>ปางปฐมเทศนา</h3>
+            <span class="alt">ธรรมจักรมุทรา</span>
+            <span class="latin">Dharmachakra Mudra</span>
+          </div>
+          <div class="cell"><p class="label">ลักษณะท่ามือ</p><p>ยกมือทั้งสองขึ้นระดับอก นิ้วโป้งจรดนิ้วชี้เป็นวงกลมทั้งสองมือ แล้วนำวงทั้งสองมาแตะกันคล้ายกงล้อ</p></div>
+          <div class="cell"><p class="label">ความหมาย</p><p>การหมุนกงล้อแห่งธรรม ระลึกถึงการแสดงธรรมครั้งแรกของพระพุทธเจ้าแก่ปัญจวัคคีย์</p></div>
+        </li>
+        <li class="mudra" id="mudra-4">
+          <span class="idx">4</span>
+          <div class="name">
+            <h3>กเษปณมุทรา</h3>
+            <span class="latin">Kshepana Mudra</span>
+          </div>
+          <div class="cell"><p class="label">ลักษณะท่ามือ</p><p>ประสานมือทั้งสอง เหยียดนิ้วชี้ทั้งสองแนบชิดกันชี้ลง นิ้วที่เหลือสอดประสานกันไว้</p></div>
+          <div class="cell"><p class="label">ความหมาย</p><p>การปล่อยวาง ระบายสิ่งที่ไม่ดีออกไป และชำระจิตใจให้ปลอดโปร่ง</p></div>
+        </li>
+        <li class="mudra" id="mudra-5">
+          <span class="idx">5</span>
+          <div class="name">
+            <h3>ชูนิ้วชี้</h3>
+            <span class="alt">มุทรา R</span>
+            <span class="latin">mudra_R</span>
+          </div>
+          <div class="cell"><p class="label">ลักษณะท่ามือ</p><p>กำมือ แล้วชูนิ้วชี้ขึ้นเพียงนิ้วเดียว</p></div>
+          <div class="cell"><p class="label">ความหมาย</p><p>สื่อถึงความเป็นหนึ่งเดียวและการชี้ทางไปสู่ธรรม</p></div>
+        </li>
+        <li class="mudra" id="mudra-6">
+          <span class="idx">6</span>
+          <div class="name">
+            <h3>พนมมือ</h3>
+            <span class="alt">นมัสการมุทรา / อัญชลีมุทรา</span>
+            <span class="latin">Namaskara Mudra</span>
+            <span class="tag">ท่าในภาพหน้าจอด้านบน</span>
+          </div>
+          <div class="cell"><p class="label">ลักษณะท่ามือ</p><p>ประนมมือ ฝ่ามือทั้งสองประกบกันระดับอก ปลายนิ้วชี้ขึ้น</p></div>
+          <div class="cell"><p class="label">ความหมาย</p><p>การแสดงความเคารพ การทักทาย และการอธิษฐาน สื่อถึงความนอบน้อมและการรวมจิตให้เป็นหนึ่ง</p></div>
+        </li>
+        <li class="mudra" id="mudra-7">
+          <span class="idx">7</span>
+          <div class="name">
+            <h3>ปางแสดงธรรม</h3>
+            <span class="alt">วิตรรกมุทรา</span>
+            <span class="latin">Vitarka Mudra</span>
+          </div>
+          <div class="cell"><p class="label">ลักษณะท่ามือ</p><p>ยกมือขึ้นระดับอก ฝ่ามือหันออก ปลายนิ้วโป้งจรดปลายนิ้วชี้เป็นวงกลม นิ้วที่เหลือเหยียดขึ้น</p></div>
+          <div class="cell"><p class="label">ความหมาย</p><p>การอธิบายและถ่ายทอดธรรม การใช้ปัญญาพิจารณาเหตุและผล</p></div>
+        </li>
+      </ol>
+      <p class="ledger-note">ลำดับ 1–7 ตรงกับลำดับคลาสในโปรแกรม (เมนูเก็บข้อมูลจริงและแถบความน่าจะเป็น)</p>
+    </div>
+  </section>
+
+  <section class="sec" id="how">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="label">ML + NLP เขียนเองทั้งหมด</p>
+          <h2>จากท่ามือเป็นข้อความใน 3 ขั้น</h2>
+        </div>
+        <p>ทุกเฟรมจากกล้องผ่านสามขั้นนี้ตามลำดับ ตั้งแต่หามือในภาพ จำแนกว่าเป็นปางไหน จนถึงเรียบเรียงเป็นประโยคภาษาไทย</p>
+      </div>
+
+      <ol class="stages">
+        <li class="stage">
+          <p class="label">ขั้นที่ 1</p>
+          <h3>มองเห็นมือ</h3>
+          <ul>
+            <li>รับภาพจากกล้องแบบเรียลไทม์ ราว 24 เฟรมต่อวินาที</li>
+            <li>อ่านเฉพาะบริเวณกรอบ ROI ที่ผู้ใช้วางมือ และลากย้ายกรอบได้</li>
+            <li>แยกมือออกจากพื้นหลังด้วยสีผิว ได้รูปทรงมือ (mask) และปรับเทียบสีผิวให้เข้ากับผู้ใช้แต่ละคนได้</li>
+            <li>วัดการเคลื่อนไหวเป็นเปอร์เซ็นต์ของกรอบ เพื่อบอกว่ามือนิ่งหรือกำลังขยับ</li>
+          </ul>
+        </li>
+        <li class="stage">
+          <p class="label">ขั้นที่ 2</p>
+          <h3>จำแนกปาง</h3>
+          <ul>
+            <li>แปลงภาพมือเป็นเวกเตอร์คุณลักษณะ 120 ค่า</li>
+            <li>ส่งเข้าโครงข่าย MLP ที่มีชั้นซ่อน 128 และ 64 นิวรอน ได้ความน่าจะเป็นของทั้ง 7 ปาง</li>
+            <li>กรองผลต่อเนื่องตามเวลาด้วย HMM ให้คำตอบนิ่ง ไม่สลับไปมาระหว่างเฟรม</li>
+          </ul>
+        </li>
+        <li class="stage">
+          <p class="label">ขั้นที่ 3</p>
+          <h3>ถอดเป็นข้อความ</h3>
+          <ul>
+            <li>เรียบเรียงประโยคภาษาไทยจากผลที่ได้ บอกชื่อปาง ความมั่นใจ ลักษณะท่ามือ และความหมาย</li>
+            <li>ต่อปางที่ตรวจพบเป็นข้อความต่อเนื่อง (Transcript) พร้อมเวลา และบันทึกเป็นไฟล์ได้</li>
+            <li>สรุปจำนวนท่าที่พบและลำดับปางทั้งหมดไว้ท้ายข้อความ</li>
+          </ul>
+        </li>
+      </ol>
+
+      <p class="loop"><span class="label">เก็บข้อมูลและฝึกใหม่</span><span>เลือกปางจากเมนูเก็บข้อมูลจริง กดเก็บทีละภาพหรือต่อเนื่อง 20 ภาพ แล้วกดฝึกโมเดลใหม่ได้จากหน้าจอเดียวกัน</span></p>
+
+      <div class="detail">
+        <figure class="panel" style="margin:0">
+          <p class="label">โครงสร้างโมเดล</p>
+          <p class="panel-title">MLP 120 → 128 → 64 → 7</p>
+          <ol class="layers">
+            <li><span class="bar-area"><span class="bar" style="--h:93.75%"></span></span><b>120</b><span class="t">อินพุต<br>คุณลักษณะ</span></li>
+            <li><span class="bar-area"><span class="bar" style="--h:100%"></span></span><b>128</b><span class="t">ชั้นซ่อน 1</span></li>
+            <li><span class="bar-area"><span class="bar" style="--h:50%"></span></span><b>64</b><span class="t">ชั้นซ่อน 2</span></li>
+            <li><span class="bar-area"><span class="bar" style="--h:5.47%"></span></span><b>7</b><span class="t">เอาต์พุต<br>7 ปาง</span></li>
+          </ol>
+          <figcaption class="panel-note">ความสูงของแต่ละแท่งเทียบตามจำนวนนิวรอนในชั้นนั้น</figcaption>
+          <p class="meta"><span>test acc <strong>99.8%</strong></span><span>เวอร์ชัน <strong>20261106_144528</strong></span></p>
+        </figure>
+
+        <div class="panel">
+          <p class="label">ตัวอย่างข้อความที่ระบบสร้าง</p>
+          <p class="out-main">ท่ามือนี้คือ <em>นมัสการมุทรา (อัญชลีมุทรา / พนมมือ)</em> (มั่นใจ 100%)</p>
+          <p class="out-line"><b>ลักษณะท่ามือ:</b> ประนมมือ ฝ่ามือทั้งสองประกบกันระดับอก ปลายนิ้วชี้ขึ้น</p>
+          <p class="out-line"><b>ความหมาย:</b> การแสดงความเคารพ การทักทาย และการอธิษฐาน สื่อถึงความนอบน้อมและการรวมจิตให้เป็นหนึ่ง</p>
+          <ol class="transcript" aria-label="ข้อความที่ถอดได้">
+            <li class="more">⋯</li>
+            <li><time>[14:50:26]</time>จินมุทรา (100%)</li>
+            <li><time>[14:50:31]</time>ปางปฐมเทศนา (ธรรมจักรมุทรา) (100%)</li>
+            <li><time>[14:50:34]</time>กเษปณมุทรา (100%)</li>
+            <li><time>[14:50:38]</time>มุทรา R (ชูนิ้วชี้) (100%)</li>
+          </ol>
+          <p class="summary">ตรวจพบทั้งหมด 5 ท่า (5 ปางที่ไม่ซ้ำกัน) ตามลำดับ: ประทานอภัย → จินมุทรา → ปฐมเทศนา → กเษปณมุทรา → ชูนิ้วชี้</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="team">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="label">5 คน</p>
+          <h2>ทีมผู้จัดทำ</h2>
+        </div>
+      </div>
+      <ul class="team">
+        <li class="member">
+          <img class="avatar" src="ceo.jpg" width="112" height="112" alt="กษิดิ์เดช กลิ่นโพธิ์กลับ">
+          <p class="role">CEO</p>
+          <h3><span class="nw">กษิดิ์เดช</span> <span class="nw">กลิ่นโพธิ์กลับ</span></h3>
+          <p class="sid">6752300780</p>
+        </li>
+        <li class="member">
+          <img class="avatar" src="cto.jpg" width="112" height="112" alt="จิรภิณโญ เชียงกา">
+          <p class="role">CTO</p>
+          <h3><span class="nw">จิรภิณโญ</span> <span class="nw">เชียงกา</span></h3>
+          <p class="sid">6752300825</p>
+        </li>
+        <li class="member">
+          <img class="avatar" src="devops-1.jpg" width="112" height="112" alt="นพวรรณ อังคตรีรัตน์">
+          <p class="role">DevOps</p>
+          <h3><span class="nw">นพวรรณ</span> <span class="nw">อังคตรีรัตน์</span></h3>
+          <p class="sid">6752300895</p>
+        </li>
+        <li class="member">
+          <img class="avatar" src="devops-2.png" width="112" height="112" alt="กรลมล โตโส">
+          <p class="role">DevOps</p>
+          <h3><span class="nw">กรลมล</span> <span class="nw">โตโส</span></h3>
+          <p class="sid">6752300232</p>
+        </li>
+        <li class="member">
+          <img class="avatar" src="data-lead.jpg" width="112" height="112" alt="อนุวัฒน์ ลู่สัจวัฒนา">
+          <p class="role">Data Lead</p>
+          <h3><span class="nw">อนุวัฒน์</span> <span class="nw">ลู่สัจวัฒนา</span></h3>
+          <p class="sid">6752300925</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="contact">
+    <div class="wrap">
+      <div class="contact">
+        <div>
+          <p class="label">ช่องทางติดต่อ</p>
+          <h2>ติดตามโค้ดและผลงานของทีม</h2>
+          <p>สอบถามหรือดูความคืบหน้าของโปรเจคได้ที่ GitHub</p>
+        </div>
+        <a class="gh" href="https://github.com/money-trade" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M8 6 2 12l6 6M16 6l6 6-6 6M14 4l-4 16"/>
+          </svg>
+          github.com/money-trade
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>Mudra → Text · ระบบแปลท่ามือเป็นปางพระพุทธรูป</span>
+    <span>github.com/money-trade</span>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var items = document.querySelectorAll('.shot [data-k], .legend [data-k]');
+    var triggers = document.querySelectorAll('.pin, .key');
+    var pinned = null;
+
+    function show(k) {
+      items.forEach(function (el) { el.classList.toggle('is-on', k !== null && el.dataset.k === k); });
+      triggers.forEach(function (el) { el.setAttribute('aria-pressed', String(pinned !== null && el.dataset.k === pinned)); });
+    }
+
+    triggers.forEach(function (el) {
+      el.addEventListener('mouseenter', function () { show(el.dataset.k); });
+      el.addEventListener('mouseleave', function () { show(pinned); });
+      el.addEventListener('focus', function () { show(el.dataset.k); });
+      el.addEventListener('blur', function () { show(pinned); });
+      el.addEventListener('click', function () {
+        pinned = pinned === el.dataset.k ? null : el.dataset.k;
+        show(pinned);
+      });
+    });
+    show(null);
+  })();
+</script>
+</body>
+</html>
